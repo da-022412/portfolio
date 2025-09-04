@@ -3,15 +3,11 @@
 This repository contains the code for my personal developer portfolio.  
 It’s where I showcase selected projects, skills, and experience as a front-end engineer.
 
----
-
 ## Tech Stack
 
 - **Next.js** — framework for fast, modern React apps
 - **TypeScript** — type-safe development
 - **Tailwind CSS** — utility-first styling
-
----
 
 ## Features
 
@@ -21,8 +17,6 @@ It’s where I showcase selected projects, skills, and experience as a front-end
 - **Fast performance** through Next.js static generation and optimization
 - **Scalable architecture** for adding projects, blog posts, or case studies
 
----
-
 ## About This Project
 
 This portfolio is more than a website — it’s a demonstration of how I approach front-end engineering:
@@ -31,8 +25,6 @@ This portfolio is more than a website — it’s a demonstration of how I approa
 - Applying strong UI and accessibility standards
 - Structuring code for maintainability and growth
 - Delivering performance-focused websites that scale
-
----
 
 ## Run Locally
 
