@@ -1,9 +1,9 @@
+import type { HeroProps } from "@interfaces/hero";
+
 import HeroHome from "./HeroHome";
 
 interface Props {
-  hero: {
-    type: "home";
-  };
+  hero: HeroProps["hero"];
 }
 
 const heroes = {
