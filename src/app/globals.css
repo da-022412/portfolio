@@ -101,4 +101,8 @@ h6 {
 /* Swiper custom styles */
 .swiper-wrapper {
   @apply ease-linear items-center;
+
+  .swiper-slide {
+    @apply flex items-center justify-center;
+  }
 }
