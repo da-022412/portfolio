@@ -1,18 +1,27 @@
 import Link from "next/link";
 
-const currentYear = new Date().getFullYear();
-
 export default function Footer() {
   return (
     <footer className="border-t border-black/10">
       <div className="mx-auto max-w-6xl">
-        <div className="flex items-center justify-between p-5">
-          <div>
+        <div className="px-5 py-15 text-center">
+          <div className="text-center">
+            <h3 className="text-xl/8">Get in Touch</h3>
+          </div>
+          <div className="mt-2">
             <span className="text-sm text-black/50">
-              © {currentYear} Dennis Acosta
+              Interested in collaborating or have a project in mind? I’d be glad
+              to hear from you.
+              <br />
+              <Link
+                href="mailto&#58;hell%&#54;&#70;&#64;&#100;&#101;nn%6&#57;%73&#37;6&#49;c&#37;6Fs%7&#52;a&#46;c&#111;m"
+                className="text-black transition duration-300 ease-in-out hover:text-black/50"
+              >
+                hel&#108;o&#64;dennisaco&#115;ta&#46;&#99;o&#109;
+              </Link>
             </span>
           </div>
-          <nav>
+          <nav className="mt-5 flex items-center justify-center">
             <ul className="flex list-none gap-5 md:gap-10">
               <li>
                 <Link
