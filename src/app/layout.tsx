@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import Header from "@components/Header";
 import Footer from "@components/Footer";
@@ -21,6 +22,7 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
+      <GoogleAnalytics gaId="G-0W02E7TZ3L" />
     </html>
   );
 }
