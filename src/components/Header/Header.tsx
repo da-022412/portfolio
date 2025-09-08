@@ -1,8 +1,14 @@
+import * as motion from "motion/react-client";
+
 import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="fixed z-30 w-full border-b border-black/10 bg-white/20 backdrop-blur-xl">
+    <motion.header
+      className="fixed z-30 w-full border-b border-black/10 bg-white/20 backdrop-blur-xl"
+      animate={{ opacity: [0, 1], y: [-50, 0] }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="mx-auto max-w-6xl">
         <div className="flex items-center justify-between p-5">
           <div>
@@ -35,6 +41,6 @@ export default function Header() {
           </nav>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
