@@ -1,10 +1,16 @@
+import * as motion from "motion/react-client";
+
 import LogoShowcase from "./LogoShowcase";
 
 import Image from "next/image";
 
 export default function HeroHome() {
   return (
-    <section className="mx-auto max-w-6xl">
+    <motion.section
+      className="mx-auto max-w-6xl"
+      animate={{ opacity: [0, 1], y: [50, 0] }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="px-5 py-15 md:px-8 md:py-25 lg:flex lg:items-center lg:justify-between lg:gap-10">
         <div className="mb-5 lg:mb-0 lg:flex-3/5">
           <h1 className="mb-2 text-xl">Dennis Acosta —</h1>
@@ -26,6 +32,6 @@ export default function HeroHome() {
       </div>
 
       <LogoShowcase />
-    </section>
+    </motion.section>
   );
 }
