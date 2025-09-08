@@ -11,7 +11,7 @@ export default function LogoShowcase() {
   return (
     <div className="mt-10 lg:flex lg:items-center lg:gap-14 lg:px-8">
       <div className="mb-5 px-5 text-center md:px-0 lg:mb-0 lg:flex-1/4 lg:text-left">
-        <p className="text-lg lg:text-base">Trusted by industry leaders</p>
+        <h2 className="text-lg lg:text-base">Trusted by industry leaders</h2>
       </div>
       <div className="relative before:absolute before:top-0 before:left-0 before:z-10 before:h-full before:w-full before:bg-gradient-to-r before:from-white before:via-transparent before:to-white lg:w-3/4 lg:flex-3/4">
         <Swiper

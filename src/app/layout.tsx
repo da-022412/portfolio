@@ -23,7 +23,7 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
-      <GoogleAnalytics gaId="G-0W02E7TZ3L" />
+      <GoogleAnalytics gaId="G-MZNW38HJB7" />
     </html>
   );
 }

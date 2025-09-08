@@ -14,7 +14,7 @@ export default function Header() {
           <div>
             <Link
               href="/"
-              className="text-base transition duration-300 ease-in-out hover:text-black/50 md:text-2xl/5"
+              className="has-focus text-base transition duration-300 ease-in-out hover:text-black/50 md:text-2xl/5"
             >
               Dennis Acosta
             </Link>
@@ -24,7 +24,7 @@ export default function Header() {
               <li>
                 <Link
                   href="#work"
-                  className="text-sm transition duration-300 ease-in-out hover:text-black/50 md:text-base"
+                  className="has-focus text-sm transition duration-300 ease-in-out hover:text-black/50 md:text-base"
                 >
                   Work
                 </Link>
@@ -32,7 +32,7 @@ export default function Header() {
               <li>
                 <Link
                   href="mailto&#58;hell%&#54;&#70;&#64;&#100;&#101;nn%6&#57;%73&#37;6&#49;c&#37;6Fs%7&#52;a&#46;c&#111;m"
-                  className="text-sm transition duration-300 ease-in-out hover:text-black/50 md:text-base"
+                  className="has-focus text-sm transition duration-300 ease-in-out hover:text-black/50 md:text-base"
                 >
                   Contact
                 </Link>

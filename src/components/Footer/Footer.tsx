@@ -9,13 +9,13 @@ export default function Footer() {
             <h3 className="text-xl/8">Get in Touch</h3>
           </div>
           <div className="mt-2">
-            <span className="text-sm text-black/50">
+            <span className="text-sm text-black/75">
               Interested in collaborating or have a project in mind? I’d be glad
               to hear from you.
               <br />
               <Link
                 href="mailto&#58;hell%&#54;&#70;&#64;&#100;&#101;nn%6&#57;%73&#37;6&#49;c&#37;6Fs%7&#52;a&#46;c&#111;m"
-                className="text-black transition duration-300 ease-in-out hover:text-black/50"
+                className="has-focus text-black transition duration-300 ease-in-out hover:text-black/50"
               >
                 hel&#108;o&#64;dennisaco&#115;ta&#46;&#99;o&#109;
               </Link>
@@ -27,7 +27,8 @@ export default function Footer() {
                 <Link
                   href="https://github.com/da-022412"
                   target="_blank"
-                  className="group"
+                  className="group has-focus"
+                  aria-label="GitHub"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +49,8 @@ export default function Footer() {
                 <Link
                   href="https://linkedin.com/in/dennis-acosta"
                   target="_blank"
-                  className="group"
+                  className="group has-focus"
+                  aria-label="LinkedIn"
                 >
                   <svg
                     version="1.1"
