@@ -8,7 +8,7 @@ type Props = {
   items: Entry[];
 };
 
-export default function PortfolioItems({ items }: Props) {
+const PortfolioItems = ({ items }: Props) => {
   return (
     <motion.section
       className="mx-auto max-w-6xl"
@@ -23,4 +23,6 @@ export default function PortfolioItems({ items }: Props) {
       </div>
     </motion.section>
   );
-}
+};
+
+export default PortfolioItems;

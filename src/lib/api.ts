@@ -4,7 +4,7 @@ import { join } from "path";
 
 import { Entry } from "@interfaces/entry";
 
-const portfolioItems = join(process.cwd(), "portfolio-items");
+const portfolioItems = join(process.cwd(), "_portfolio-items");
 
 export function getEntrySlugs() {
   return fs.readdirSync(portfolioItems);
@@ -16,10 +16,7 @@ export function getEntryBySlug(slug: string) {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
-  return { item: { ...data, content } } as Entry;
-
-  /* TODO: Make dynamic
-  return { item: { ...data, slug: realSlug, content } } as Entry; */
+  return { item: { ...data, slug: realSlug, content } } as Entry;
 }
 
 export function getAllEntries(): Entry[] {

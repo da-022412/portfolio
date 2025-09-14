@@ -23,7 +23,7 @@ export default function Header() {
             <ul className="flex list-none gap-5 md:gap-10">
               <li>
                 <Link
-                  href="#work"
+                  href="/#work"
                   className="has-focus text-sm transition duration-300 ease-in-out hover:text-black/50 md:text-base"
                 >
                   Work
