@@ -1,6 +1,7 @@
 import type { HeroProps } from "@interfaces/hero";
 
 import HeroHome from "./HeroHome";
+import HeroEntry from "./HeroEntry";
 
 interface Props {
   hero: HeroProps["hero"];
@@ -8,6 +9,7 @@ interface Props {
 
 const heroes = {
   home: HeroHome,
+  entry: HeroEntry,
 };
 
 export const Hero: React.FC<Props> = ({ hero }) => {

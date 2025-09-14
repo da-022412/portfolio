@@ -4,7 +4,7 @@ import LogoShowcase from "./LogoShowcase";
 
 import Image from "next/image";
 
-export default function HeroHome() {
+const HeroHome = () => {
   return (
     <motion.section
       className="mx-auto max-w-6xl"
@@ -34,4 +34,6 @@ export default function HeroHome() {
       <LogoShowcase />
     </motion.section>
   );
-}
+};
+
+export default HeroHome;

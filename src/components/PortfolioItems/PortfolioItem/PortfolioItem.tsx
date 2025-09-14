@@ -7,12 +7,11 @@ type Props = {
   item: Entry["item"];
 };
 
-export default function PortfolioItem({ item }: Props) {
+const PortfolioItem = ({ item }: Props) => {
   return (
     <Link
-      href={item.slug}
-      target="_blank"
-      className="group block not-last:mb-5 has-focus md:not-last:mb-0"
+      href={`/portfolio-items/${item.slug}`}
+      className="group has-focus block not-last:mb-5 md:not-last:mb-0"
     >
       <article className="relative h-full overflow-hidden bg-neutral-100 px-5 pt-5 pb-[calc(100%+1.25rem)] shadow-md transition duration-300 ease-in-out group-hover:shadow-xl md:px-10 md:pt-10">
         <div className="mb-2">
@@ -36,4 +35,6 @@ export default function PortfolioItem({ item }: Props) {
       </article>
     </Link>
   );
-}
+};
+
+export default PortfolioItem;

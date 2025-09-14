@@ -4,6 +4,7 @@ export type Entry = {
     title: string;
     coverImage: string;
     excerpt: string;
+    link: string;
     content: string;
     order: number;
   };

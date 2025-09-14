@@ -1,0 +1,17 @@
+.rich-text {
+  p {
+    &:not(:last-child) {
+      margin-bottom: 0.625rem;
+    }
+  }
+
+  h2 {
+    font-size: 2.25rem;
+    margin: 1.25rem 0 0.625rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin: 1.25rem 0 0.625rem;
+  }
+}
