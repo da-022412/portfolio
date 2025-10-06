@@ -31,7 +31,7 @@ export default function Header() {
               </li>
               <li>
                 <Link
-                  href="mailto&#58;hell%&#54;&#70;&#64;&#100;&#101;nn%6&#57;%73&#37;6&#49;c&#37;6Fs%7&#52;a&#46;c&#111;m"
+                  href="mai&#108;to&#58;&#37;64en&#37;&#54;&#69;&#37;6&#57;%73&#64;%6&#52;%65nni&#115;a&#99;%6Fs%&#55;4a&#46;%&#54;3o%6D"
                   className="has-focus text-sm transition duration-300 ease-in-out hover:text-black/50 md:text-base"
                 >
                   Contact
