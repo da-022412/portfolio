@@ -8,6 +8,8 @@ It’s where I showcase selected projects, skills, and experience as a front-end
 - **Next.js** — framework for fast, modern React apps
 - **TypeScript** — type-safe development
 - **Tailwind CSS** — utility-first styling
+- **Payload** — local CMS/admin for portfolio content
+- **Postgres** — local development database through Docker Compose
 
 ## Features
 
@@ -32,5 +34,17 @@ Clone the repo and install dependencies:
 
 ```bash
 npm install
+npm run db:up
 npm run dev
 ```
+
+Payload admin is available at `http://localhost:3000/admin`. The local
+database defaults to:
+
+```bash
+DATABASE_URI=postgres://payload:payload@localhost:5432/portfolio
+```
+
+The first visit to `/admin` will prompt you to create the initial admin user.
+`npm run db:up` uses Docker Compose when Docker is running, and falls back to a
+local PostgreSQL 16 cluster when available.
