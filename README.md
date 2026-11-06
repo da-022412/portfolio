@@ -98,6 +98,48 @@ Until bootstrap succeeds, the first-user form cannot create an account.
 No email delivery service is configured. Password-reset email delivery requires
 an email adapter in a separately approved change.
 
+### Import the existing projects
+
+Run from the repository root after configuring the intended database and applying
+its schema migration. For this review, use the Preview database, not production.
+
+Validate all eight source files and their exact body HTML without connecting to
+a database:
+
+```bash
+npm run seed:projects -- --dry-run
+```
+
+After approving the import, configure `DATABASE_URL` and `PAYLOAD_SECRET` in
+`.env` (or the process environment), check that the URL targets the intended
+Preview database, then run:
+
+```bash
+npm run seed:projects
+```
+
+A `[SENSITIVE]` placeholder from a Vercel environment pull is not a usable
+`PAYLOAD_SECRET`; the script refuses it. Never commit environment values.
+
+The script reads only `_portfolio-items/*.md`. Filename slugs, title, excerpt,
+cover-image paths, sort numbers, and live-site links are preserved. Markdown
+headings, paragraphs, text, and hard/soft line breaks become Lexical JSON, with
+an exact HTML comparison for every body before any database connection opens.
+Unsupported Markdown or invalid fields fail preflight instead of losing content.
+The unused `portfolio-items/` duplicate is excluded. No source file is modified.
+
+Documents are matched by slug: missing documents are created, identical documents
+are skipped without a write, and changed source fields are updated in place.
+Every result is logged as `CREATE`, `SKIP`, or `UPDATE`, followed by totals. A
+rerun does not create duplicates; it can resume an interrupted run. Reimporting
+will overwrite CMS edits to the migrated source fields when they differ from
+the Markdown source. Other fields and unrelated projects are left alone.
+
+This is a trusted Local API maintenance command. It bypasses access control and
+suppresses request-only Next.js revalidation. After an import, redeploy the
+Preview (or rebuild/restart locally) to regenerate static pages from the imported
+data. The build never runs the import automatically.
+
 ### Checks
 
 ```bash
@@ -106,6 +148,7 @@ npm run typecheck
 npm run lint
 npm run test:access
 npm run test:content
+npm run test:import
 ```
 
 The build generates Payload's import map and collection types before building

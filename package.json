@@ -11,7 +11,9 @@
     "payload": "payload",
     "create-admin": "payload run scripts/create-admin.ts",
     "test:access": "tsx --test tests/payload-access.test.ts",
-    "test:content": "tsx --test tests/project-rich-text.test.ts"
+    "test:content": "tsx --test tests/project-rich-text.test.ts",
+    "seed:projects": "tsx scripts/seed-projects.ts",
+    "test:import": "tsx --test tests/project-import.test.ts"
   },
   "dependencies": {
     "@next/third-parties": "16.4.5",
