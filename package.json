@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "payload": "payload",
     "create-admin": "payload run scripts/create-admin.ts",
-    "test:access": "tsx --test tests/payload-access.test.ts"
+    "test:access": "tsx --test tests/payload-access.test.ts",
+    "test:content": "tsx --test tests/project-rich-text.test.ts"
   },
   "dependencies": {
     "@next/third-parties": "16.4.5",
