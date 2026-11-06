@@ -194,9 +194,14 @@ The live production deployment is unchanged. Existing Markdown files and public
 image files are untouched. The separate production database, secrets, and schema
 are configured, and all eight projects are imported with field/HTML parity and
 an unchanged rerun verified. The production admin is created and verified.
-Dependency review and deployment remain pending rollout work.
+Dependency review is complete, with the remaining upstream findings documented
+in `reports/production-readiness-review.json`. Branch review/push and deployment
+remain pending rollout work.
 
-The Phase 2 dependency audit reported 33 advisories (3 critical), including the
-existing Swiper/Tailwind dependency chains and dependencies introduced by
-Payload's editor. These remain unresolved and need a separate dependency review;
-no automatic major-version remediation has been applied.
+The dependency review reduced the audit from 33 affected packages (including
+three critical findings) to 12: seven low and five moderate, with no high or
+critical findings. The remaining counts come from two upstream advisories:
+Payload's unpatched `deepmerge` dependency, and an old esbuild development-server
+dependency under Drizzle tooling. No esbuild serve endpoint is configured here.
+See [the readiness review](reports/production-readiness-review.json) for exact
+versions, overrides, advisory links, validation, and residual-risk limits.
