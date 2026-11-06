@@ -1,6 +1,10 @@
 import type { CollectionConfig } from "payload";
 
 import { isAdmin } from "@/access/isAdmin";
+import {
+  revalidateProject,
+  revalidateDeletedProject,
+} from "@/hooks/revalidateProjects";
 
 export const Projects: CollectionConfig = {
   slug: "projects",
@@ -13,6 +17,10 @@ export const Projects: CollectionConfig = {
     create: isAdmin,
     update: isAdmin,
     delete: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateProject],
+    afterDelete: [revalidateDeletedProject],
   },
   fields: [
     { name: "title", type: "text", required: true },

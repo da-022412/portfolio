@@ -37,8 +37,9 @@ npm run dev
 
 ## Payload CMS setup
 
-Payload is installed at `/admin`, with REST endpoints at `/api`. During this
-migration's configuration phase, the public site still reads `_portfolio-items/`.
+Payload is installed at `/admin`, with REST endpoints at `/api`. The public
+frontend reads the `projects` collection through Payload's Local API. Existing
+Markdown files remain untouched for the separately approved import phase.
 The `projects` collection uses Lexical rich text. Cover images remain in
 `public/images/`; there is no upload collection or external media storage.
 
@@ -67,7 +68,8 @@ npm run payload -- migrate
 ```
 
 The initial schema includes `projects`, authenticated `users`, and Payload's
-internal tables. No migration has been applied as part of the repository setup.
+internal tables. Apply this migration once per database; the Preview database
+has already been initialized.
 Future schema changes require `npm run payload -- migrate:create <name>`, review,
 and an explicit migration run. Do not run rollback/reset commands against a
 populated database without reviewing their destructive effects.
@@ -103,12 +105,25 @@ npm run build
 npm run typecheck
 npm run lint
 npm run test:access
+npm run test:content
 ```
 
 The build generates Payload's import map and collection types before building
-Next.js. Database-backed admin/API checks require the environment and schema
-setup above. The public frontend remains independent of the database until its
-content-source migration is approved.
+Next.js. Building and serving the frontend now requires the environment and
+schema setup above. The homepage and project routes remain static;
+`generateStaticParams` reads project slugs from Payload. New slugs can render
+on demand without a rebuild.
+
+Project saves and deletions revalidate `/` and the affected
+`/portfolio-items/{slug}` paths. Slug changes invalidate both old and new detail
+paths. Standalone Local API scripts must pass `context: { disableRevalidate: true }`
+to avoid calling Next.js revalidation outside a server request.
+
+Rich-text converters preserve the existing body HTML without adding a container.
+The content tests cover all eight Markdown bodies, including hard line breaks and
+PineBridge's soft newline. An empty Projects collection produces an empty work
+list and missing project URLs return 404; there is no Markdown fallback. Until
+the import is approved and run, this is the expected Phase 3 preview state.
 
 The Phase 2 dependency audit reported 33 advisories (3 critical), including the
 existing Swiper/Tailwind dependency chains and dependencies introduced by

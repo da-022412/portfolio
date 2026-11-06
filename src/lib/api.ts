@@ -1,29 +1,48 @@
-import fs from "fs";
-import matter from "gray-matter";
-import { join } from "path";
+import config from "@payload-config";
+import { getPayload } from "payload";
 
-import { Entry } from "@interfaces/entry";
+import type { Entry } from "@interfaces/entry";
+import type { Project } from "@/payload-types";
+import richTextToHtml from "@/lib/richTextToHtml";
 
-const portfolioItems = join(process.cwd(), "_portfolio-items");
-
-export function getEntrySlugs() {
-  return fs.readdirSync(portfolioItems);
+function toEntry(project: Project): Entry {
+  return {
+    item: {
+      title: project.title,
+      slug: project.slug,
+      excerpt: project.excerpt ?? "",
+      coverImage: project.coverImage,
+      link: project.siteUrl ?? "",
+      content: richTextToHtml(project.body),
+      order: project.order,
+    },
+  };
 }
 
-export function getEntryBySlug(slug: string) {
-  const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(portfolioItems, `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
+export async function getEntryBySlug(slug: string): Promise<Entry | null> {
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "projects",
+    where: { slug: { equals: slug } },
+    depth: 0,
+    limit: 1,
+    overrideAccess: false,
+  });
 
-  return { item: { ...data, slug: realSlug, content } } as Entry;
+  return docs[0] ? toEntry(docs[0]) : null;
 }
 
-export function getAllEntries(): Entry[] {
-  const slugs = getEntrySlugs();
-  const entries = slugs
-    .map((slug) => getEntryBySlug(slug))
-    .sort((a, b) => (a.item.order > b.item.order ? 1 : -1));
+export async function getAllEntries(): Promise<Entry[]> {
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "projects",
+    // Preserve the existing order, including CMUA before Abbott for order 7.
+    sort: ["order", "-slug"],
+    depth: 0,
+    pagination: false,
+    limit: 0,
+    overrideAccess: false,
+  });
 
-  return entries;
+  return docs.map(toEntry);
 }
