@@ -52,8 +52,9 @@ The Vercel project `amphora-creative/portfolio` has separate Neon databases:
 `portfolio-payload-preview` for Preview and `portfolio-payload-production` for
 Production. Both use the free plan in `iad1`, with separate environment-scoped
 `DATABASE_URL` values and sensitive `PAYLOAD_SECRET` values. The production schema
-is initialized and all eight projects are imported. The first production
-administrator is not yet created; the live deployment is unchanged.
+is initialized, all eight projects are imported, and the production admin
+`dennis@dennisacosta.com` has been created and verified. Temporary credentials
+are stored privately outside Git; the live deployment is unchanged.
 
 For another environment, connect Neon and supply its PostgreSQL connection
 string as `DATABASE_URL`.
@@ -192,8 +193,8 @@ assets, and React routing/bootstrap data.
 The live production deployment is unchanged. Existing Markdown files and public
 image files are untouched. The separate production database, secrets, and schema
 are configured, and all eight projects are imported with field/HTML parity and
-an unchanged rerun verified. First-admin creation and deployment remain pending
-separate rollout work.
+an unchanged rerun verified. The production admin is created and verified.
+Dependency review and deployment remain pending rollout work.
 
 The Phase 2 dependency audit reported 33 advisories (3 critical), including the
 existing Swiper/Tailwind dependency chains and dependencies introduced by

@@ -327,7 +327,7 @@
     "previewAdminProjectList": "passed: all eight imported projects listed"
   },
   "remainingSetup": [
-    "Production database, environment variables, schema migration, and all eight projects are configured and verified. The first production administrator, deployment, and final live URL checks remain pending.",
+    "Production database, variables, schema, eight projects, and first admin are configured and verified. Dependency review, deployment, and final live URL checks remain pending.",
     "Preview admin already exists; media stays in public/images, so no storage service is required.",
     "Password-reset email requires a separately configured email adapter."
   ],
@@ -356,7 +356,7 @@
     "migrationApplied": true,
     "connectionVerified": true,
     "projects": 8,
-    "admins": 0,
+    "admins": 1,
     "deployed": false,
     "previewUnchanged": true
   },
@@ -390,5 +390,13 @@
       "cmua",
       "abbott-labs"
     ]
+  },
+  "productionAdmin": {
+    "email": "dennis@dennisacosta.com",
+    "created": true,
+    "credentialsVerified": true,
+    "temporaryTestSessionsCleared": true,
+    "verifiedAt": "2026-11-06T23:03:04.889282+00:00",
+    "passwordStoredInGit": false
   }
 }
