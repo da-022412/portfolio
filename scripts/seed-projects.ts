@@ -43,5 +43,12 @@ if (args.includes("--dry-run")) {
     );
   } finally {
     await payload.destroy();
+    await new Promise<void>((resolve, reject) => {
+      payload.logger.flush((error) => (error ? reject(error) : resolve()));
+    });
   }
 }
+
+// Match Payload's CLI lifecycle: the PostgreSQL adapter retains a listener
+// connection after destroy(), so a completed one-off command must exit explicitly.
+process.exit(0);
