@@ -48,8 +48,15 @@ pinned in `package.json` and `package-lock.json`.
 
 ### Environment and Neon
 
-Connect Neon to the Vercel project yourself, select the intended database and
-environments, and supply its PostgreSQL connection string as `DATABASE_URL`.
+The Vercel project `amphora-creative/portfolio` has separate Neon databases:
+`portfolio-payload-preview` for Preview and `portfolio-payload-production` for
+Production. Both use the free plan in `iad1`, with separate environment-scoped
+`DATABASE_URL` values and sensitive `PAYLOAD_SECRET` values. The production schema
+is initialized, but production content and the first administrator are not yet
+created; the live deployment is unchanged.
+
+For another environment, connect Neon and supply its PostgreSQL connection
+string as `DATABASE_URL`.
 Preserve the connection string's SSL parameters. Supply a long random
 `PAYLOAD_SECRET`, consistent across application instances. Neither value belongs
 in Git or in client-side environment variables.
@@ -68,8 +75,8 @@ npm run payload -- migrate
 ```
 
 The initial schema includes `projects`, authenticated `users`, and Payload's
-internal tables. Apply this migration once per database; the Preview database
-has already been initialized.
+internal tables. Apply this migration once per database; both Preview and
+Production databases have already been initialized.
 Future schema changes require `npm run payload -- migrate:create <name>`, review,
 and an explicit migration run. Do not run rollback/reset commands against a
 populated database without reviewing their destructive effects.
@@ -182,9 +189,10 @@ setup, and limitations. The [complete HTML diff](reports/payload-migration-html.
 records all raw-value differences, including generated font classes, framework
 assets, and React routing/bootstrap data.
 
-Production is unchanged. Existing Markdown files and public image files are
-untouched. Production database setup, schema/content import, and deployment must
-be handled separately after review.
+The live production deployment is unchanged. Existing Markdown files and public
+image files are untouched. The separate production database, secrets, and schema
+are configured; content import, first-admin creation, and deployment remain
+pending separate rollout work.
 
 The Phase 2 dependency audit reported 33 advisories (3 critical), including the
 existing Swiper/Tailwind dependency chains and dependencies introduced by

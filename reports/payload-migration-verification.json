@@ -327,7 +327,7 @@
     "previewAdminProjectList": "passed: all eight imported projects listed"
   },
   "remainingSetup": [
-    "Production database, environment variables, schema migration, and content import are intentionally not configured or run; production remains unchanged.",
+    "Production database, required environment variables, and schema migration are configured and verified. Production content import, first administrator, deployment, and final live URL checks remain pending.",
     "Preview admin already exists; media stays in public/images, so no storage service is required.",
     "Password-reset email requires a separately configured email adapter."
   ],
@@ -337,5 +337,27 @@
     "Phase 2 npm audit reported 33 advisories (3 critical), including existing and Payload transitive dependencies. Broad dependency remediation is outside this migration and remains unresolved."
   ],
   "verifiedApplicationCommit": "22650b5",
-  "verifiedImportCommandCommit": "c14cc6f"
+  "verifiedImportCommandCommit": "c14cc6f",
+  "productionConfiguration": {
+    "verifiedAt": "2026-11-06T22:55:42.688682+00:00",
+    "resourceName": "portfolio-payload-production",
+    "resourceId": "store_jQjIGTQqhYzxNlQO",
+    "neonProjectId": "ancient-morning-13376391",
+    "region": "iad1",
+    "billingPlan": "free_v3",
+    "vercelEnvironment": "production",
+    "requiredVariablesConfigured": [
+      "DATABASE_URL",
+      "DATABASE_URL_UNPOOLED",
+      "PAYLOAD_SECRET"
+    ],
+    "payloadSecretStorage": "sensitive; separate from Preview",
+    "schemaMigration": "20261106_214924_initial_payload_schema",
+    "migrationApplied": true,
+    "connectionVerified": true,
+    "projects": 0,
+    "admins": 0,
+    "deployed": false,
+    "previewUnchanged": true
+  }
 }
