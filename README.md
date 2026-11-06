@@ -165,8 +165,26 @@ to avoid calling Next.js revalidation outside a server request.
 Rich-text converters preserve the existing body HTML without adding a container.
 The content tests cover all eight Markdown bodies, including hard line breaks and
 PineBridge's soft newline. An empty Projects collection produces an empty work
-list and missing project URLs return 404; there is no Markdown fallback. Until
-the import is approved and run, this is the expected Phase 3 preview state.
+list and missing project URLs return 404; there is no Markdown fallback. All
+eight original projects have now been imported into the Preview database.
+
+### Completed migration verification
+
+The first import created eight projects; repeated runs skipped all eight without
+updates or duplicates. Build, typecheck, lint, and all 27 tests passed. The
+homepage and eight detail pages return 200 on the refreshed Preview. The
+homepage content markup is identical to the Markdown baseline; detail markup
+matches after the approved generated CSS-module class rename.
+
+See [verification results](reports/payload-migration-verification.json) for every
+URL, browser style/layout checks, exact comparison scope, remaining production
+setup, and limitations. The [complete HTML diff](reports/payload-migration-html.diff)
+records all raw-value differences, including generated font classes, framework
+assets, and React routing/bootstrap data.
+
+Production is unchanged. Existing Markdown files and public image files are
+untouched. Production database setup, schema/content import, and deployment must
+be handled separately after review.
 
 The Phase 2 dependency audit reported 33 advisories (3 critical), including the
 existing Swiper/Tailwind dependency chains and dependencies introduced by
