@@ -327,7 +327,7 @@
     "previewAdminProjectList": "passed: all eight imported projects listed"
   },
   "remainingSetup": [
-    "Production database, required environment variables, and schema migration are configured and verified. Production content import, first administrator, deployment, and final live URL checks remain pending.",
+    "Production database, environment variables, schema migration, and all eight projects are configured and verified. The first production administrator, deployment, and final live URL checks remain pending.",
     "Preview admin already exists; media stays in public/images, so no storage service is required.",
     "Password-reset email requires a separately configured email adapter."
   ],
@@ -355,9 +355,40 @@
     "schemaMigration": "20261106_214924_initial_payload_schema",
     "migrationApplied": true,
     "connectionVerified": true,
-    "projects": 0,
+    "projects": 8,
     "admins": 0,
     "deployed": false,
     "previewUnchanged": true
+  },
+  "productionImport": {
+    "verifiedAt": "2026-11-06T23:00:03.073897+00:00",
+    "firstRun": {
+      "created": 8,
+      "updated": 0,
+      "skipped": 0,
+      "exitCode": 0
+    },
+    "secondRun": {
+      "created": 0,
+      "updated": 0,
+      "skipped": 8,
+      "exitCode": 0
+    },
+    "verified": true,
+    "importedProjects": 8,
+    "totalProjects": 8,
+    "admins": 0,
+    "allSourceFieldsMatch": true,
+    "allBodyHtmlMatches": true,
+    "slugs": [
+      "pinebridge-investments",
+      "colonial-williamsburg",
+      "usc",
+      "ciis",
+      "purdue-global-law-school",
+      "saic",
+      "cmua",
+      "abbott-labs"
+    ]
   }
 }
