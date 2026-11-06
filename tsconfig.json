@@ -31,6 +31,9 @@
       ],
       "@interfaces/*": [
         "./src/interfaces/*"
+      ],
+      "@payload-config": [
+        "./src/payload.config.ts"
       ]
     }
   },
