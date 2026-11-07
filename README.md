@@ -184,24 +184,14 @@ homepage and eight detail pages return 200 on the refreshed Preview. The
 homepage content markup is identical to the Markdown baseline; detail markup
 matches after the approved generated CSS-module class rename.
 
-See [verification results](reports/payload-migration-verification.json) for every
-URL, browser style/layout checks, exact comparison scope, remaining production
-setup, and limitations. The [complete HTML diff](reports/payload-migration-html.diff)
-records all raw-value differences, including generated font classes, framework
-assets, and React routing/bootstrap data.
-
 The live production deployment is unchanged. Existing Markdown files and public
 image files are untouched. The separate production database, secrets, and schema
 are configured, and all eight projects are imported with field/HTML parity and
 an unchanged rerun verified. The production admin is created and verified.
-Dependency review is complete, with the remaining upstream findings documented
-in `reports/production-readiness-review.json`. Branch review/push and deployment
-remain pending rollout work.
+Branch review/push and deployment remain pending rollout work.
 
 The dependency review reduced the audit from 33 affected packages (including
 three critical findings) to 12: seven low and five moderate, with no high or
 critical findings. The remaining counts come from two upstream advisories:
 Payload's unpatched `deepmerge` dependency, and an old esbuild development-server
 dependency under Drizzle tooling. No esbuild serve endpoint is configured here.
-See [the readiness review](reports/production-readiness-review.json) for exact
-versions, overrides, advisory links, validation, and residual-risk limits.
