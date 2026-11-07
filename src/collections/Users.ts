@@ -18,7 +18,7 @@ export const Users: CollectionConfig = {
     beforeChange: [
       ({ data, operation, req, context }) => {
         // Payload's first-register operation bypasses collection access checks.
-        // Only the local bootstrap script may create an unauthenticated admin.
+        // Only trusted server-side setup may create an unauthenticated admin.
         if (
           operation === "create" &&
           req.user?.collection !== "users" &&

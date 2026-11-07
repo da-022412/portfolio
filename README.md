@@ -39,7 +39,7 @@ npm run dev
 
 Payload is installed at `/admin`, with REST endpoints at `/api`. The public
 frontend reads the `projects` collection through Payload's Local API. Existing
-Markdown files remain untouched for the separately approved import phase.
+Markdown files remain preserved after the completed import.
 The `projects` collection uses Lexical rich text. Cover images remain in
 `public/images/`; there is no upload collection or external media storage.
 
@@ -82,71 +82,15 @@ Future schema changes require `npm run payload -- migrate:create <name>`, review
 and an explicit migration run. Do not run rollback/reset commands against a
 populated database without reviewing their destructive effects.
 
-### First administrator
+### Administrators and content
 
-Every user is an administrator. Anonymous account creation is blocked, including
-Payload's special first-user registration operation. Bootstrap the initial
-administrator locally after applying the schema migration. In Bash, these
-prompts keep credentials out of command history and hide password input:
-
-```bash
-read -r -p 'Admin email: ' PAYLOAD_ADMIN_EMAIL
-read -r -s -p 'Admin password: ' PAYLOAD_ADMIN_PASSWORD
-printf '\n'
-export PAYLOAD_ADMIN_EMAIL PAYLOAD_ADMIN_PASSWORD
-npm run create-admin
-unset PAYLOAD_ADMIN_EMAIL PAYLOAD_ADMIN_PASSWORD
-```
-
-These two variables are used only by the bootstrap command; do not add them to
-Vercel or commit them. The command refuses to create an account if any user
-already exists. Sign in at `/admin` and manage subsequent administrators there.
-Until bootstrap succeeds, the first-user form cannot create an account.
+The initial administrators and eight projects are already provisioned in Preview
+and Production. Manage users and projects through `/admin`. Every user is an
+administrator; anonymous account creation and first-user registration are blocked.
+The one-time import and administrator setup scripts have been removed.
 
 No email delivery service is configured. Password-reset email delivery requires
 an email adapter in a separately approved change.
-
-### Import the existing projects
-
-Run from the repository root after configuring the intended database and applying
-its schema migration. For this review, use the Preview database, not production.
-
-Validate all eight source files and their exact body HTML without connecting to
-a database:
-
-```bash
-npm run seed:projects -- --dry-run
-```
-
-After approving the import, configure `DATABASE_URL` and `PAYLOAD_SECRET` in
-`.env` (or the process environment), check that the URL targets the intended
-Preview database, then run:
-
-```bash
-npm run seed:projects
-```
-
-A `[SENSITIVE]` placeholder from a Vercel environment pull is not a usable
-`PAYLOAD_SECRET`; the script refuses it. Never commit environment values.
-
-The script reads only `_portfolio-items/*.md`. Filename slugs, title, excerpt,
-cover-image paths, sort numbers, and live-site links are preserved. Markdown
-headings, paragraphs, text, and hard/soft line breaks become Lexical JSON, with
-an exact HTML comparison for every body before any database connection opens.
-Unsupported Markdown or invalid fields fail preflight instead of losing content.
-The unused `portfolio-items/` duplicate is excluded. No source file is modified.
-
-Documents are matched by slug: missing documents are created, identical documents
-are skipped without a write, and changed source fields are updated in place.
-Every result is logged as `CREATE`, `SKIP`, or `UPDATE`, followed by totals. A
-rerun does not create duplicates; it can resume an interrupted run. Reimporting
-will overwrite CMS edits to the migrated source fields when they differ from
-the Markdown source. Other fields and unrelated projects are left alone.
-
-This is a trusted Local API maintenance command. It bypasses access control and
-suppresses request-only Next.js revalidation. After an import, redeploy the
-Preview (or rebuild/restart locally) to regenerate static pages from the imported
-data. The build never runs the import automatically.
 
 ### Checks
 
@@ -156,7 +100,6 @@ npm run typecheck
 npm run lint
 npm run test:access
 npm run test:content
-npm run test:import
 ```
 
 The build generates Payload's import map and collection types before building
@@ -179,7 +122,7 @@ eight original projects have now been imported into the Preview database.
 ### Completed migration verification
 
 The first import created eight projects; repeated runs skipped all eight without
-updates or duplicates. Build, typecheck, lint, and all 27 tests passed. The
+updates or duplicates. Build, typecheck, lint, and the retained 21 tests pass. The
 homepage and eight detail pages return 200 on the refreshed Preview. The
 homepage content markup is identical to the Markdown baseline; detail markup
 matches after the approved generated CSS-module class rename.
