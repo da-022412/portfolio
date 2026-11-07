@@ -12,16 +12,18 @@ const EntryBody = ({ content, link }: { content: string; link: string }) => {
       transition={{ duration: 0.5 }}
     >
       <div dangerouslySetInnerHTML={{ __html: content }}></div>
-      <div className="mt-5">
-        <Link
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition duration-300 ease-in-out hover:text-black/50"
-        >
-          Visit the site &#8594;
-        </Link>
-      </div>
+      {link && (
+        <div className="mt-5">
+          <Link
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition duration-300 ease-in-out hover:text-black/50"
+          >
+            Visit the site &#8594;
+          </Link>
+        </div>
+      )}
     </motion.article>
   );
 };

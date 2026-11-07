@@ -3,8 +3,10 @@ import { getAllEntries } from "@/lib/api";
 import PortfolioItems from "@/components/PortfolioItems";
 import Hero from "@components/Hero";
 
-export default function Home() {
-  const items = getAllEntries();
+export const dynamic = "force-static";
+
+export default async function Home() {
+  const items = await getAllEntries();
 
   return (
     <main>
