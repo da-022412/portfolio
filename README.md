@@ -28,10 +28,19 @@ This portfolio is more than a website — it’s a demonstration of how I approa
 
 ## Run Locally
 
-Clone the repo and install dependencies:
+Use Node.js `^22.23.4 || >=24.22.1`, then clone the repo and install the locked
+dependencies:
 
 ```bash
-npm install
+npm ci
+cp .env.example .env
+```
+
+Fill in `DATABASE_URL` and `PAYLOAD_SECRET` in `.env` using a separate development
+database or Neon branch. Follow the schema setup below for a new database before
+starting the app:
+
+```bash
 npm run dev
 ```
 
@@ -54,7 +63,8 @@ Production. Both use the free plan in `iad1`, with separate environment-scoped
 `DATABASE_URL` values and sensitive `PAYLOAD_SECRET` values. The production schema
 is initialized, all eight projects are imported, and the production admin
 `dennis@dennisacosta.com` has been created and verified. Temporary credentials
-are stored privately outside Git; the live deployment is unchanged.
+are stored privately outside Git. The Payload migration is deployed to production
+at [dennisacosta.com](https://dennisacosta.com).
 
 For another environment, connect Neon and supply its PostgreSQL connection
 string as `DATABASE_URL`.
@@ -89,6 +99,15 @@ and Production. Manage users and projects through `/admin`. Every user is an
 administrator; anonymous account creation and first-user registration are blocked.
 The one-time import and administrator setup scripts have been removed.
 
+The approved [NYU Gallatin entry](https://dennisacosta.com/portfolio-items/nyu-gallatin)
+was published on November 12, 2026, bringing the production Projects collection
+to nine entries. Its source snapshot is `_portfolio-items/nyu-gallatin.md`, with
+its cover at `public/images/nyu-gallatin-screenshot-v2.webp`. A review copy also
+remains in the isolated `preview-nyu-gallatin` Neon branch under the Preview
+project. Markdown files are not read by the frontend: future content changes
+must be applied to the corresponding Payload Projects collection as well as
+any source snapshot kept in Git.
+
 No email delivery service is configured. Password-reset email delivery requires
 an email adapter in a separately approved change.
 
@@ -122,16 +141,27 @@ eight original projects have now been imported into the Preview database.
 ### Completed migration verification
 
 The first import created eight projects; repeated runs skipped all eight without
-updates or duplicates. Build, typecheck, lint, and the retained 21 tests pass. The
+updates or duplicates. Migration verification passed build, typecheck, lint, and
+the retained 21 tests. The
 homepage and eight detail pages return 200 on the refreshed Preview. The
 homepage content markup is identical to the Markdown baseline; detail markup
 matches after the approved generated CSS-module class rename.
 
-The live production deployment is unchanged. Existing Markdown files and public
-image files are untouched. The separate production database, secrets, and schema
+The Payload migration deployment was confirmed on November 12, 2026: Vercel reported the
+deployment serving `dennisacosta.com` and `www.dennisacosta.com` as Ready, built
+from `main` commit `9a7a4da8fe3ade1707580bffbc422bfcb02147d9` (the Payload
+migration merge). This matched the local checkout at verification time.
+
+Existing Markdown files and public image files are untouched. The separate
+production database, secrets, and schema
 are configured, and all eight projects are imported with field/HTML parity and
 an unchanged rerun verified. The production admin is created and verified.
-Branch review/push and deployment remain pending rollout work.
+
+Local verification on November 12, 2026 passed build, lint, typecheck, and all 22
+tests, including the new Gallatin content fixture. The build used Node.js
+24.22.1 and the isolated Gallatin preview database, with local credentials kept
+in an ignored `.env`. The Gallatin Vercel preview also built successfully. This
+verification did not change the production database or deployment.
 
 The dependency review reduced the audit from 33 affected packages (including
 three critical findings) to 12: seven low and five moderate, with no high or
