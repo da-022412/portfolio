@@ -1,177 +1,105 @@
 # Dennis Acosta – Portfolio
 
-This repository contains the code for my personal developer portfolio.  
-It’s where I showcase selected projects, skills, and experience as a front-end engineer.
+A Next.js portfolio with Payload CMS, React, TypeScript, Tailwind CSS, and Motion.
 
-## Tech Stack
+## Content management
 
-- **Next.js** — framework for fast, modern React apps
-- **TypeScript** — type-safe development
-- **Tailwind CSS** — utility-first styling
+Payload is the single source of truth for all portfolio content. Create, edit,
+reorder, and delete projects through `/admin`. Project text, excerpts, links,
+slugs, and display order are stored in the `projects` collection in PostgreSQL.
+The body uses Payload’s Lexical rich-text editor.
 
-## Features
+The frontend reads projects through Payload’s Local API. There are no local
+content collections, source snapshots, import steps, or filesystem fallbacks.
+Publishing or editing project content does not require a code commit or PR.
 
-- **Custom design** built without templates or stock themes
-- **Responsive layout** optimized for desktop and mobile
-- **Clean, accessible UI** with semantic HTML and WCAG best practices
-- **Fast performance** through Next.js static generation and optimization
-- **Scalable architecture** for adding projects, blog posts, or case studies
+Projects display in ascending `order`, with descending slug as the tie-breaker.
+MasterTax uses order `5.5`, immediately after Purdue Global Law School (`5`).
 
-## About This Project
+Existing cover images are assets in `public/images/`, referenced by the
+`coverImage` field in Payload. There is currently no upload collection or
+external media storage. Adding a new image file still requires a deployment;
+editing project content or selecting an existing image does not.
 
-This portfolio is more than a website — it’s a demonstration of how I approach front-end engineering:
+Every user is an administrator. Anonymous account creation and first-user
+registration are blocked. Manage users through `/admin`.
 
-- Building with modern frameworks (React, Next.js, TypeScript)
-- Applying strong UI and accessibility standards
-- Structuring code for maintainability and growth
-- Delivering performance-focused websites that scale
+No email adapter is configured, so password-reset email delivery is unavailable.
 
-## Run Locally
+## Run locally
 
-Use Node.js `^22.23.4 || >=24.22.1`, then clone the repo and install the locked
-dependencies:
+Use Node.js `^22.23.4 || >=24.22.1` and install the locked dependencies:
 
 ```bash
 npm ci
 cp .env.example .env
 ```
 
-Fill in `DATABASE_URL` and `PAYLOAD_SECRET` in `.env` using a separate development
-database or Neon branch. Follow the schema setup below for a new database before
-starting the app:
+Fill in `DATABASE_URL` and `PAYLOAD_SECRET` in `.env`, then run:
 
 ```bash
 npm run dev
 ```
 
-## Payload CMS setup
+Use a separate development database or Neon branch. Preserve the connection
+string’s SSL parameters and use a long random `PAYLOAD_SECRET`, consistent
+across instances of an environment. Neither value belongs in Git or client-side
+environment variables. Payload CLI commands load `.env`.
 
-Payload is installed at `/admin`, with REST endpoints at `/api`. The public
-frontend reads the `projects` collection through Payload's Local API. Existing
-Markdown files remain preserved after the completed import.
-The `projects` collection uses Lexical rich text. Cover images remain in
-`public/images/`; there is no upload collection or external media storage.
+The Vercel project `amphora-creative/portfolio` uses separate Neon projects,
+`portfolio-payload-preview` and `portfolio-payload-production`, with
+environment-scoped credentials. Both schemas are initialized. The production
+site is [dennisacosta.com](https://www.dennisacosta.com).
 
-Use Node.js `^22.23.4 || >=24.22.1`. Next.js, React, and Payload dependencies are
-pinned in `package.json` and `package-lock.json`.
+## Database migrations
 
-### Environment and Neon
-
-The Vercel project `amphora-creative/portfolio` has separate Neon databases:
-`portfolio-payload-preview` for Preview and `portfolio-payload-production` for
-Production. Both use the free plan in `iad1`, with separate environment-scoped
-`DATABASE_URL` values and sensitive `PAYLOAD_SECRET` values. The production schema
-is initialized, all eight projects are imported, and the production admin
-`dennis@dennisacosta.com` has been created and verified. Temporary credentials
-are stored privately outside Git. The Payload migration is deployed to production
-at [dennisacosta.com](https://dennisacosta.com).
-
-For another environment, connect Neon and supply its PostgreSQL connection
-string as `DATABASE_URL`.
-Preserve the connection string's SSL parameters. Supply a long random
-`PAYLOAD_SECRET`, consistent across application instances. Neither value belongs
-in Git or in client-side environment variables.
-
-For local development, copy `.env.example` to `.env` and fill in those two values.
-Payload CLI commands load `.env`. Use a separate development database or Neon
-branch when testing locally. This repository does not provision databases or
-change Vercel settings.
-
-The adapter disables automatic database creation and schema pushing. After
-reviewing the committed SQL migration, apply it explicitly to the intended
-database:
+Automatic database creation and schema pushing are disabled. For a new database,
+review and explicitly apply the committed migration:
 
 ```bash
 npm run payload -- migrate
 ```
 
-The initial schema includes `projects`, authenticated `users`, and Payload's
-internal tables. Apply this migration once per database; both Preview and
-Production databases have already been initialized.
-Future schema changes require `npm run payload -- migrate:create <name>`, review,
-and an explicit migration run. Do not run rollback/reset commands against a
-populated database without reviewing their destructive effects.
+Do not rerun initial setup or import content into an already populated
+environment. New databases start without project content; use Payload to manage
+their content.
 
-### Administrators and content
-
-The initial administrators and eight projects are already provisioned in Preview
-and Production. Manage users and projects through `/admin`. Every user is an
-administrator; anonymous account creation and first-user registration are blocked.
-The one-time import and administrator setup scripts have been removed.
-
-The approved [NYU Gallatin entry](https://dennisacosta.com/portfolio-items/nyu-gallatin)
-was published on November 12, 2026, bringing the production Projects collection
-to nine entries. Its source snapshot is `_portfolio-items/nyu-gallatin.md`, with
-its cover at `public/images/nyu-gallatin-screenshot-v2.webp`. A review copy also
-remains in the isolated `preview-nyu-gallatin` Neon branch under the Preview
-project. Markdown files are not read by the frontend: future content changes
-must be applied to the corresponding Payload Projects collection as well as
-any source snapshot kept in Git.
-
-The approved [MasterTax entry](https://dennisacosta.com/portfolio-items/mastertax)
-was published on November 14, 2026, bringing the production Projects collection
-to ten entries. Its source snapshot is `_portfolio-items/mastertax.md` and its
-cover is `public/images/mastertax-screenshot.webp`. Its order of `5.5` places it
-immediately after Purdue Global Law School without changing existing entries.
-A review copy remains in the isolated `preview-mastertax` Neon branch.
-
-No email delivery service is configured. Password-reset email delivery requires
-an email adapter in a separately approved change.
-
-### Checks
+For future schema changes, generate and review a migration before applying it:
 
 ```bash
-npm run build
-npm run typecheck
-npm run lint
-npm run test:access
-npm run test:content
+npm run payload -- migrate:create <name>
 ```
 
-The build generates Payload's import map and collection types before building
-Next.js. Building and serving the frontend now requires the environment and
-schema setup above. The homepage and project routes remain static;
-`generateStaticParams` reads project slugs from Payload. New slugs can render
-on demand without a rebuild.
+Review the effects of any rollback or reset before running it against a
+populated database.
 
-Project saves and deletions revalidate `/` and the affected
-`/portfolio-items/{slug}` paths. Slug changes invalidate both old and new detail
-paths. Standalone Local API scripts must pass `context: { disableRevalidate: true }`
-to avoid calling Next.js revalidation outside a server request.
+## Rendering and revalidation
 
-Rich-text converters preserve the existing body HTML without adding a container.
-The content tests cover all eight Markdown bodies, including hard line breaks and
-PineBridge's soft newline. An empty Projects collection produces an empty work
-list and missing project URLs return 404; there is no Markdown fallback. All
-eight original projects have now been imported into the Preview database.
+The homepage and project pages are statically generated from Payload.
+`generateStaticParams` reads project slugs from the Projects collection. New
+slugs can render on demand without a rebuild. Missing project URLs return 404,
+and an empty collection produces an empty project list.
 
-### Completed migration verification
+Saving or deleting a project revalidates `/` and the affected
+`/portfolio-items/{slug}` paths. Changing a slug invalidates both the old and new
+detail paths. Standalone Local API scripts must pass
+`context: { disableRevalidate: true }` to avoid calling Next.js revalidation
+outside a server request; those scripts do not invalidate existing page caches.
 
-The first import created eight projects; repeated runs skipped all eight without
-updates or duplicates. Migration verification passed build, typecheck, lint, and
-the retained 21 tests. The
-homepage and eight detail pages return 200 on the refreshed Preview. The
-homepage content markup is identical to the Markdown baseline; detail markup
-matches after the approved generated CSS-module class rename.
+## Checks
 
-The Payload migration deployment was confirmed on November 12, 2026: Vercel reported the
-deployment serving `dennisacosta.com` and `www.dennisacosta.com` as Ready, built
-from `main` commit `9a7a4da8fe3ade1707580bffbc422bfcb02147d9` (the Payload
-migration merge). This matched the local checkout at verification time.
+```bash
+npm run lint
+npm run typecheck
+npm run test:access
+npm run test:content
+npm run build
+```
 
-Existing Markdown files and public image files are untouched. The separate
-production database, secrets, and schema
-are configured, and all eight projects are imported with field/HTML parity and
-an unchanged rerun verified. The production admin is created and verified.
+Access tests cover project permissions, user permissions, and blocked public
+registration. Content tests exercise Payload rich-text rendering, line breaks,
+empty bodies, and HTML escaping directly.
 
-Local verification on November 12, 2026 passed build, lint, typecheck, and all 22
-tests, including the new Gallatin content fixture. The build used Node.js
-24.22.1 and the isolated Gallatin preview database, with local credentials kept
-in an ignored `.env`. The Gallatin Vercel preview also built successfully. This
-verification did not change the production database or deployment.
-
-The dependency review reduced the audit from 33 affected packages (including
-three critical findings) to 12: seven low and five moderate, with no high or
-critical findings. The remaining counts come from two upstream advisories:
-Payload's unpatched `deepmerge` dependency, and an old esbuild development-server
-dependency under Drizzle tooling. No esbuild serve endpoint is configured here.
+The build generates Payload’s import map and collection types before building
+Next.js. Building and serving the frontend require a configured database with
+the schema applied.
