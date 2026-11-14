@@ -108,6 +108,13 @@ project. Markdown files are not read by the frontend: future content changes
 must be applied to the corresponding Payload Projects collection as well as
 any source snapshot kept in Git.
 
+The approved [MasterTax entry](https://dennisacosta.com/portfolio-items/mastertax)
+was published on November 14, 2026, bringing the production Projects collection
+to ten entries. Its source snapshot is `_portfolio-items/mastertax.md` and its
+cover is `public/images/mastertax-screenshot.webp`. Its order of `5.5` places it
+immediately after Purdue Global Law School without changing existing entries.
+A review copy remains in the isolated `preview-mastertax` Neon branch.
+
 No email delivery service is configured. Password-reset email delivery requires
 an email adapter in a separately approved change.
 
